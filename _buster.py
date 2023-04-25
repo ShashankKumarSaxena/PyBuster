@@ -87,16 +87,16 @@ class Buster:
 
         url: str = self.args.url
 
-        try:
-            parsed_url = urllib3.util.parse_url(url)
-        except Exception:
-            return color_println("- Invalid URL provided!", Fore.RED)
-
         if not url.startswith("http://") or not url.startswith("https://"):
             if self.args.secure:
                 url = "https://" + url
             else:
                 url = "http://" + url
+
+        try:
+            parsed_url = urllib3.util.parse_url(url)
+        except Exception:
+            return color_println("- Invalid URL provided!", Fore.RED)
 
         threads = []
         wordlist_chunks = divide_list_into_chunks(self.parsed_wordlist, self.threads)
