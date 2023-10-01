@@ -1,4 +1,5 @@
 from __future__ import annotations
+import urllib3.util
 import urllib.parse
 
 import requests
@@ -93,11 +94,12 @@ class Buster:
         except Exception:
             return color_println("- Invalid URL provided!", Fore.RED)
 
+        session = requests.Session()
         threads = []
         wordlist_chunks = divide_list_into_chunks(self.parsed_wordlist, self.threads)
         for i in range(self.threads):
             try:
-                thread = threading.Thread(target=self._make_request, args=(url, wordlist_chunks[i]))
+                thread = threading.Thread(target=self._make_request, args=(session, url, wordlist_chunks[i]))
                 threads.append(thread)
 
                 thread.start()
