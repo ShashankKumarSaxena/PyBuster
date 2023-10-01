@@ -1,4 +1,5 @@
 from __future__ import annotations
+import urllib.parse
 
 import requests
 import threading
@@ -56,10 +57,7 @@ class Buster:
 
     def _make_request(self, url: str, dir_names):
         for dir_name in dir_names:
-            if url.endswith("/"):
-                parsed_url = url + dir_name
-            else:
-                parsed_url = url + "/" + dir_name
+            parsed_url = urllib.parse.urljoin(url, dir_name)
 
             resp = requests.get(parsed_url)
 
