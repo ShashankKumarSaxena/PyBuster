@@ -61,16 +61,13 @@ class Buster:
 
             resp = requests.get(parsed_url)
 
-            if self.args.show_successful:
-                if resp.status_code == 200:
+            if resp.status_code == 200:
+                if self.args.show_successful:
                     color_println(
                         f"[STATUS: {resp.status_code}] {parsed_url}", getattr(StatusColors, f"STATUS_{resp.status_code}")
                     )
                     self.results.append(parsed_url + "\n")
                 else:
-                    continue
-            else:
-                if resp.status_code == 200:
                     self.results.append(parsed_url + "\n")
 
                 color_println(
